@@ -124,6 +124,9 @@ def forward_post(path):
 
 if __name__ == "__main__":
     logger.info("Starting the Flask application on host 0.0.0.0:5000")
-    app.config['JSON_AS_ASCII'] = False
-    app.config['JSONIFY_MIMETYPE'] = "application/json;charset=utf-8"
+    app.config.update({
+        'JSON_AS_ASCII': False,  # 保持原有配置
+        'JSONIFY_MIMETYPE': 'application/json; charset=utf-8',  # 添加完整 charset 定义
+        'JSONIFY_PRETTYPRINT_REGULAR': True  # 新增配置确保格式化输出
+    })
     app.run(host="0.0.0.0", port=5000)
