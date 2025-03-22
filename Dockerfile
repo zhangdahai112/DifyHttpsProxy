@@ -12,6 +12,6 @@ RUN pip install -r requirements.txt
 
 COPY proxy.py .
 
-EXPOSE $LISTEN_PORT
+EXPOSE 5000
 
 CMD ["python", "proxy.py"]

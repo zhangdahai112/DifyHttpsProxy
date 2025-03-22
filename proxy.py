@@ -70,6 +70,7 @@ def forward_request(method, url, headers, data=None, params=None, verify=False):
             response_data = response.json()
             # 转换 Unicode 编码并保持中文可读
             response_text = json.dumps(response_data, ensure_ascii=False)
+<<<<<<< HEAD
             print("转换成功了！", flush=True)
             
             # 修正点：直接返回原始响应数据并设置 headers
@@ -87,6 +88,17 @@ def forward_request(method, url, headers, data=None, params=None, verify=False):
                 {'Content-Type': response.headers.get('Content-Type', 'application/json; charset=utf-8') + '; charset=utf-8'}
             )
       
+=======
+            print(response_text, flush=True)  # 移除 encode().decode 操作
+            response_data = json.loads(response_text)
+        except json.JSONDecodeError:
+            response_data = {"data": response.text}
+        
+        response =  jsonify(response_data)
+        response.headers.setdefault('Content-Type', 'application/json; charset=utf-8')
+        # 添加响应头字符集设置
+        return response
+>>>>>>> e932217... 223
     except requests.RequestException as e:
         logger.error(f"Request error: {str(e)}")
         return json.dumps({"error": str(e)}), 500, {'Content-Type': 'application/json'}
